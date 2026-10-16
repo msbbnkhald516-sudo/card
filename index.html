@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>كرت دعوة - ايهم</title>
+  <link rel="stylesheet" href="../css/test.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ألعاب نارية -->
+  <canvas id="fireworks"></canvas>
+
+  <!-- شريط علوي -->
+  <div class="ticker-wrapper top-ticker">
+    <div class="ticker-track">
+      <span>✦ ايهم &amp; كريمته ✦</span>
+      <span>💍 حفل زفاف مبارك 💍</span>
+      <span>✦ الشيخ خليل أبو حسان ✦</span>
+      <span>🌹 المملكة الأردنية الهاشمية 🌹</span>
+      <span>✦ ايهم &amp; كريمته ✦</span>
+      <span>💍 حفل زفاف مبارك 💍</span>
+      <span>✦ الشيخ خليل أبو حسان ✦</span>
+      <span>🌹 المملكة الأردنية الهاشمية 🌹</span>
+    </div>
+  </div>
+
+  <!-- الكرت -->
+  <div class="card">
+    <div class="ornament">❧ ✦ ❧</div>
+
+    <!-- ساعة حية -->
+    <div class="live-clock">
+      <div class="clock-face">
+        <div class="clock-label">الوقت الآن</div>
+        <div class="clock-time" id="clockTime">--:--:--</div>
+        <div class="clock-date" id="clockDate">---</div>
+        <div class="clock-pulse"></div>
+      </div>
+    </div>
+
+    <div class="header">
+      <p class="host-name">الشيخ خليل أبو حسان</p>
+      <p class="invite-text">يتشرف بدعوتكم لحضور حفل زفاف ابنه</p>
+    </div>
+
+    <div class="names">
+      <span class="groom">ايهم</span>
+      <span class="and">&amp;</span>
+      <span class="bride">كريمته</span>
+    </div>
+
+    <div class="divider"><span>◆ ◇ ◆</span></div>
+
+    <div class="details">
+      <div class="detail-item"><span class="icon">📅</span><span>سيتم تحديد الموعد قريباً إن شاء الله</span></div>
+      <div class="detail-item"><span class="icon">📍</span><span>المملكة الأردنية الهاشمية</span></div>
+    </div>
+
+    <div class="divider"><span>◆ ◇ ◆</span></div>
+
+    <p class="closing">نتشرف بحضوركم وكرم مشاركتنا فرحتنا</p>
+    <p class="family">ايهم خليل أبو حسان</p>
+
+    <div class="ornament">❧ ✦ ❧</div>
+  </div>
+
+  <!-- شريط سفلي -->
+  <div class="ticker-wrapper bottom-ticker">
+    <div class="ticker-track reverse">
+      <span>🕊️ بالرفاه والبنين 🕊️</span>
+      <span>📢 سيتم تحديد موعد العرس قريباً إن شاء الله — انتظرونا 📢</span>
+      <span>✨ ألف مبروك ✨</span>
+      <span>💐 سيتم تحديد موعد العرس قريباً إن شاء الله — انتظرونا 💐</span>
+      <span>🕊️ بالرفاه والبنين 🕊️</span>
+      <span>📢 سيتم تحديد موعد العرس قريباً إن شاء الله — انتظرونا 📢</span>
+      <span>✨ ألف مبروك ✨</span>
+      <span>💐 سيتم تحديد موعد العرس قريباً إن شاء الله — انتظرونا 💐</span>
+    </div>
+  </div>
+
+  <script>
+    /* ساعة حية */
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2,'0');
+      const m = String(now.getMinutes()).padStart(2,'0');
+      const s = String(now.getSeconds()).padStart(2,'0');
+      document.getElementById('clockTime').textContent = `${h}:${m}:${s}`;
+      const days = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+      const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+      document.getElementById('clockDate').textContent =
+        `${days[now.getDay()]}، ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    /* ألعاب نارية */
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const GOLD_COLORS = [
+      '#FFD700','#FFC200','#FFB300','#FF8C00',
+      '#FFF0A0','#FFECB3','#FF6F00','#FFFFFF',
+      '#FFD54F','#FFE082','#FF7043','#FFAB40'
+    ];
+
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x; this.y = y;
+        this.color = color;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 5 + 1.5;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.012 + 0.008;
+        this.radius = Math.random() * 2.5 + 1;
+        this.gravity = 0.07;
+        this.trail = [];
+      }
+      update() {
+        this.trail.push({ x: this.x, y: this.y, alpha: this.alpha });
+        if (this.trail.length > 6) this.trail.shift();
+        this.vy += this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+      }
+      draw() {
+        for (let i = 0; i < this.trail.length; i++) {
+          const t = this.trail[i];
+          ctx.beginPath();
+          ctx.arc(t.x, t.y, this.radius * 0.5, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.globalAlpha = t.alpha * (i / this.trail.length) * 0.4;
+          ctx.fill();
+        }
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.alpha;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = this.color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    class Rocket {
+      constructor() {
+        this.x = Math.random() * canvas.width * 0.8 + canvas.width * 0.1;
+        this.y = canvas.height;
+        this.targetY = Math.random() * canvas.height * 0.45 + canvas.height * 0.05;
+        this.speed = Math.random() * 5 + 7;
+        this.color = GOLD_COLORS[Math.floor(Math.random() * GOLD_COLORS.length)];
+        this.trail = [];
+        this.exploded = false;
+      }
+      update() {
+        this.trail.push({ x: this.x, y: this.y });
+        if (this.trail.length > 12) this.trail.shift();
+        this.y -= this.speed;
+        if (this.y <= this.targetY) this.exploded = true;
+      }
+      draw() {
+        for (let i = 0; i < this.trail.length; i++) {
+          const t = this.trail[i];
+          ctx.beginPath();
+          ctx.arc(t.x, t.y, 2, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.globalAlpha = (i / this.trail.length) * 0.6;
+          ctx.fill();
+        }
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = '#fff';
+        ctx.globalAlpha = 1;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    let particles = [];
+    let rockets = [];
+
+    function explode(x, y) {
+      const count = Math.floor(Math.random() * 60) + 80;
+      const baseColor = GOLD_COLORS[Math.floor(Math.random() * GOLD_COLORS.length)];
+      for (let i = 0; i < count; i++) {
+        const color = Math.random() > 0.3 ? baseColor : GOLD_COLORS[Math.floor(Math.random() * GOLD_COLORS.length)];
+        particles.push(new Particle(x, y, color));
+      }
+    }
+
+    function launchRocket() {
+      rockets.push(new Rocket());
+    }
+
+    // إطلاق صاروخ كل 1.2 ثانية
+    launchRocket();
+    setInterval(launchRocket, 1200);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.globalAlpha = 0.18;
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalAlpha = 1;
+
+      rockets = rockets.filter(r => {
+        r.update();
+        r.draw();
+        if (r.exploded) { explode(r.x, r.y); return false; }
+        return true;
+      });
+
+      particles = particles.filter(p => {
+        p.update();
+        p.draw();
+        return p.alpha > 0;
+      });
+
+      ctx.globalAlpha = 1;
+    }
+    animate();
+  </script>
+
+</body>
+</html>

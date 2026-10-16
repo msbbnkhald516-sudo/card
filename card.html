@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>كرت دعوة</title>
+  <link rel="stylesheet" href="../css/test.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- شريط إعلاني علوي متحرك -->
+  <div class="ticker-wrapper top-ticker">
+    <div class="ticker-track" id="tickerTop">
+      <span>✦ أحمد &amp; سارة ✦</span>
+      <span>💍 حفل زفاف مبارك 💍</span>
+      <span>✦ الجمعة ٢٠ نوفمبر ٢٠٢٦ ✦</span>
+      <span>🌹 قاعة الأفراح الملكية — الرياض 🌹</span>
+      <span>✦ أحمد &amp; سارة ✦</span>
+      <span>💍 حفل زفاف مبارك 💍</span>
+      <span>✦ الجمعة ٢٠ نوفمبر ٢٠٢٦ ✦</span>
+      <span>🌹 قاعة الأفراح الملكية — الرياض 🌹</span>
+    </div>
+  </div>
+
+  <!-- الكرت الرئيسي -->
+  <div class="card">
+    <div class="ornament top">❧ ✦ ❧</div>
+
+    <!-- ساعة حية -->
+    <div class="live-clock">
+      <div class="clock-face">
+        <div class="clock-label">الوقت الآن</div>
+        <div class="clock-time" id="clockTime">--:--:--</div>
+        <div class="clock-date" id="clockDate">---</div>
+        <div class="clock-pulse"></div>
+      </div>
+    </div>
+
+    <div class="header">
+      <p class="invite-text">يسعدنا دعوتكم لحضور حفل زفاف</p>
+    </div>
+
+    <div class="names">
+      <span class="groom">أحمد</span>
+      <span class="and">&amp;</span>
+      <span class="bride">سارة</span>
+    </div>
+
+    <div class="divider"><span>◆ ◇ ◆</span></div>
+
+    <div class="details">
+      <div class="detail-item">
+        <span class="icon">📅</span>
+        <span>الجمعة، ٢٠ نوفمبر ٢٠٢٦</span>
+      </div>
+      <div class="detail-item">
+        <span class="icon">🕖</span>
+        <span>السادسة مساءً</span>
+      </div>
+      <div class="detail-item">
+        <span class="icon">📍</span>
+        <span>قاعة الأفراح الملكية — الرياض</span>
+      </div>
+    </div>
+
+    <div class="divider"><span>◆ ◇ ◆</span></div>
+
+    <p class="closing">نتشرف بحضوركم وكرم مشاركتنا فرحتنا</p>
+    <p class="family">عائلة الأحمد &amp; عائلة المحمد</p>
+
+    <div class="ornament bottom">❧ ✦ ❧</div>
+  </div>
+
+  <!-- شريط إعلاني سفلي متحرك (عكسي) -->
+  <div class="ticker-wrapper bottom-ticker">
+    <div class="ticker-track reverse" id="tickerBottom">
+      <span>🕊️ بالرفاه والبنين 🕊️</span>
+      <span>✨ ألف مبروك ✨</span>
+      <span>💐 أتمنى لكم حياة سعيدة 💐</span>
+      <span>🌟 وليمة الفرح تنتظركم 🌟</span>
+      <span>🕊️ بالرفاه والبنين 🕊️</span>
+      <span>✨ ألف مبروك ✨</span>
+      <span>💐 أتمنى لكم حياة سعيدة 💐</span>
+      <span>🌟 وليمة الفرح تنتظركم 🌟</span>
+    </div>
+  </div>
+
+  <script>
+    // ساعة حية تعمل 24 ساعة
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clockTime').textContent = `${h}:${m}:${s}`;
+
+      const days = ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+      const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+      const dayName = days[now.getDay()];
+      const date = now.getDate();
+      const month = months[now.getMonth()];
+      const year = now.getFullYear();
+      document.getElementById('clockDate').textContent = `${dayName}، ${date} ${month} ${year}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+
+</body>
+</html>
